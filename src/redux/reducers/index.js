@@ -1,14 +1,12 @@
 import { combineReducers } from "redux";
+import input from "./formReducer";
+import filter from "./filterReducer";
+import singleContact from "./contactReducer";
 
 const rootReducer = combineReducers({
-  contacts: [
-    {
-      id: null,
-      name: null,
-      number: null,
-    },
-  ],
-  filter: "",
+  contacts: singleContact,
+  filter,
+  input,
 });
 
 export default rootReducer;

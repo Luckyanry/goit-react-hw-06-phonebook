@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { CSSTransition } from "react-transition-group";
-import PropTypes from "prop-types";
+// import PropTypes from "prop-types";
 import { v4 as uuidv4 } from "uuid";
 import "./ContactForm.css";
 
