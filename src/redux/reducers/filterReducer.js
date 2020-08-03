@@ -1,19 +1,11 @@
-import { QUERY_FILTER, FILTERED_CONTACT } from "../constants/filterConstants";
+import { QUERY_FILTER } from "../constants/filterConstants";
 
-const initialeState = [];
+const initialeState = "";
 
-export default (state = initialeState, action) => {
-  switch (action.type) {
+export default (state = initialeState, { type, payload }) => {
+  switch (type) {
     case QUERY_FILTER:
-      return [...state, action.payload];
-
-    case FILTERED_CONTACT:
-      return state.filter((contact) =>
-        contact.name.toLowerCase().includes(state.toLowerCase())
-      );
-    //   return state.contacts.filter((contact) =>
-    //     contact.name.toLowerCase().includes(state.filter.toLowerCase())
-    //   );
+      return (state = payload);
 
     default:
       return state;

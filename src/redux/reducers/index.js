@@ -1,12 +1,10 @@
 import { combineReducers } from "redux";
 import input from "./formReducer";
 import filter from "./filterReducer";
-import singleContact from "./contactReducer";
+import items from "./contactReducer";
 
-const rootReducer = combineReducers({
-  contacts: singleContact,
+export default combineReducers({
+  items,
   filter,
   input,
 });
-
-export default rootReducer;

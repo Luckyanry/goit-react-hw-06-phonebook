@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { CSSTransition } from "react-transition-group";
-// import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { addContact } from "../../redux/actions/contactAction";
+import PropTypes from "prop-types";
 import { v4 as uuidv4 } from "uuid";
 import "./ContactForm.css";
 
@@ -27,7 +29,7 @@ class ContactForm extends Component {
     const { name, number, alert } = this.state;
     e.preventDefault();
 
-    const { contacts } = this.props.state;
+    const { contacts } = this.props;
     const isExists = contacts.find((contact) => contact.name === name);
 
     if (isExists) {
@@ -107,18 +109,25 @@ class ContactForm extends Component {
   }
 }
 
-export default ContactForm;
+const mapStateToProps = (state) => ({
+  contacts: state.contacts.items,
+  filter: state.contacts.filter,
+});
 
-// ContactForm.propTypes = {
-//   state: PropTypes.shape({
-//     contacts: PropTypes.arrayOf(
-//       PropTypes.shape({
-//         name: PropTypes.string,
-//         id: PropTypes.string,
-//         namber: PropTypes.string,
-//       })
-//     ),
-//     filter: PropTypes.string,
-//   }).isRequired,
-//   addContact: PropTypes.func.isRequired,
-// };
+const mapDispatchToProps = {
+  addContact,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ContactForm);
+
+ContactForm.propTypes = {
+  contacts: PropTypes.arrayOf(
+    PropTypes.shape({
+      name: PropTypes.string,
+      id: PropTypes.string,
+      namber: PropTypes.string,
+    })
+  ).isRequired,
+  filter: PropTypes.string.isRequired,
+  addContact: PropTypes.func.isRequired,
+};

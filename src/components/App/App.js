@@ -1,5 +1,8 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 import { CSSTransition } from "react-transition-group";
+import { contactStorage } from "../../redux/actions/contactAction";
+import { handleFilter } from "../../redux/actions/filterAction";
 import ContactForm from "../ContactForm/ContactForm";
 import Filter from "../Filter/Filter";
 import ContactList from "../ContactList/ContactList";
@@ -7,13 +10,7 @@ import "./App.css";
 
 class App extends Component {
   state = {
-    contacts: [
-      { id: "id-1", name: "Rosie Simpson", number: "459-12-56" },
-      { id: "id-2", name: "Hermione Kline", number: "443-89-12" },
-      { id: "id-3", name: "Eden Clements", number: "645-17-79" },
-      { id: "id-4", name: "Annie Copeland", number: "227-91-26" },
-    ],
-    filter: "",
+    animation: false,
   };
 
   componentDidMount() {
@@ -23,44 +20,23 @@ class App extends Component {
 
     const savedContacts = localStorage.getItem("contacts");
     if (savedContacts) {
-      this.setState({
-        contacts: JSON.parse(savedContacts),
-      });
+      this.props.contactStorage(JSON.parse(savedContacts));
     }
   }
 
-  componentDidUpdate(prevProps, prevState) {
-    const { contacts } = this.state;
-    if (prevState.contacts !== contacts) {
+  componentDidUpdate(prevProps) {
+    const { contacts } = this.props;
+    if (prevProps.contacts !== contacts) {
       localStorage.setItem("contacts", JSON.stringify(contacts));
     }
   }
 
-  handleFilter = ({ target }) => {
-    const { value, name } = target;
-    this.setState({
-      [name]: value,
-    });
-  };
-
   getFilteredContact = () => {
-    const { contacts, filter } = this.state;
+    const { contacts, filter } = this.props;
+
     return contacts.filter((contact) =>
       contact.name.toLowerCase().includes(filter.toLowerCase())
     );
-  };
-
-  addContact = (contactObj) => {
-    this.setState((prev) => ({
-      contacts: [...prev.contacts, contactObj],
-    }));
-  };
-
-  deleteContact = ({ target }) => {
-    const { id } = target;
-    this.setState((prev) => ({
-      contacts: prev.contacts.filter((contact) => contact.id !== id),
-    }));
   };
 
   render() {
@@ -76,9 +52,9 @@ class App extends Component {
           <h1 className="AppTitle">Phonebook</h1>
         </CSSTransition>
 
-        <ContactForm state={this.state} addContact={this.addContact} />
+        <ContactForm />
 
-        {this.state.contacts.length === 0 && (
+        {this.props.contacts.length === 0 && (
           <>
             <h2 className="ContactTitle">Contacts</h2>
             <p>Contacts list is empty. Please, create new cotnact!</p>
@@ -86,7 +62,7 @@ class App extends Component {
         )}
 
         <CSSTransition
-          in={this.state.contacts.length > 1}
+          in={this.props.contacts.length > 1}
           classNames="FilterAnimation"
           timeout={250}
           unmountOnExit
@@ -94,13 +70,20 @@ class App extends Component {
           <Filter state={this.state} handleFilter={this.handleFilter} />
         </CSSTransition>
 
-        <ContactList
-          filteredContacts={this.getFilteredContact()}
-          deleteContact={this.deleteContact}
-        />
+        <ContactList filteredContacts={this.getFilteredContact()} />
       </div>
     );
   }
 }
 
-export default App;
+const mapStateToProps = (state) => ({
+  contacts: state.contacts.items,
+  filter: state.contacts.filter,
+});
+
+const mapDispatchToProps = {
+  contactStorage,
+  handleFilter,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
