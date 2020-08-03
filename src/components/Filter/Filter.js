@@ -24,16 +24,16 @@ const Filter = ({ state, handleFilter }) => {
 
 export default Filter;
 
-Filter.propTypes = {
-  state: PropTypes.shape({
-    contacts: PropTypes.arrayOf(
-      PropTypes.shape({
-        name: PropTypes.string,
-        id: PropTypes.string,
-        namber: PropTypes.string,
-      })
-    ),
-    filter: PropTypes.string,
-  }).isRequired,
-  handleFilter: PropTypes.func.isRequired,
-};
+// Filter.propTypes = {
+//   state: PropTypes.shape({
+//     contacts: PropTypes.arrayOf(
+//       PropTypes.shape({
+//         name: PropTypes.string,
+//         id: PropTypes.string,
+//         namber: PropTypes.string,
+//       })
+//     ),
+//     filter: PropTypes.string,
+//   }).isRequired,
+//   handleFilter: PropTypes.func.isRequired,
+// };

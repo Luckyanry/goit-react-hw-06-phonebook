@@ -17,11 +17,11 @@ const SingleContact = ({ contact, deleteContact }) => {
 
 export default SingleContact;
 
-SingleContact.propTypes = {
-  contact: PropTypes.shape({
-    name: PropTypes.string,
-    id: PropTypes.string,
-    namber: PropTypes.string,
-  }).isRequired,
-  deleteContact: PropTypes.func.isRequired,
-};
+// SingleContact.propTypes = {
+//   contact: PropTypes.shape({
+//     name: PropTypes.string,
+//     id: PropTypes.string,
+//     namber: PropTypes.string,
+//   }).isRequired,
+//   deleteContact: PropTypes.func.isRequired,
+// };

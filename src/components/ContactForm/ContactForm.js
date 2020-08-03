@@ -109,16 +109,16 @@ class ContactForm extends Component {
 
 export default ContactForm;
 
-ContactForm.propTypes = {
-  state: PropTypes.shape({
-    contacts: PropTypes.arrayOf(
-      PropTypes.shape({
-        name: PropTypes.string,
-        id: PropTypes.string,
-        namber: PropTypes.string,
-      })
-    ),
-    filter: PropTypes.string,
-  }).isRequired,
-  addContact: PropTypes.func.isRequired,
-};
+// ContactForm.propTypes = {
+//   state: PropTypes.shape({
+//     contacts: PropTypes.arrayOf(
+//       PropTypes.shape({
+//         name: PropTypes.string,
+//         id: PropTypes.string,
+//         namber: PropTypes.string,
+//       })
+//     ),
+//     filter: PropTypes.string,
+//   }).isRequired,
+//   addContact: PropTypes.func.isRequired,
+// };
