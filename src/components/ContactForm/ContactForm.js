@@ -1,9 +1,8 @@
 import React, { Component } from "react";
-import { CSSTransition } from "react-transition-group";
 import { connect } from "react-redux";
-import { addContact } from "../../redux/actions/contactAction";
+import { CSSTransition } from "react-transition-group";
 import PropTypes from "prop-types";
-import { v4 as uuidv4 } from "uuid";
+import { addContact } from "../../redux/actions/contactAction";
 import "./ContactForm.css";
 
 class ContactForm extends Component {
@@ -37,13 +36,7 @@ class ContactForm extends Component {
       return this.reset();
     }
 
-    const singleContact = {
-      name,
-      number,
-      id: uuidv4(),
-    };
-
-    this.props.addContact(singleContact);
+    this.props.addContact(name, number);
     this.reset();
   };
 

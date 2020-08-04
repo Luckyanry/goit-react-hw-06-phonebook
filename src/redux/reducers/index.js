@@ -1,6 +1,5 @@
 import { combineReducers } from "redux";
-import filter from "./filterReducer";
-import items from "./contactReducer";
+import { items, filter } from "./contactReducer";
 
 export default combineReducers({
   items,

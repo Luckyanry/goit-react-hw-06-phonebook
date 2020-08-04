@@ -4,35 +4,35 @@ import PropTypes from "prop-types";
 import { deleteContact } from "../../redux/actions/contactAction";
 import "./SingleContact.css";
 
-const SingleContact = ({ contact, deleteContact }) => {
-  const { name, id, number } = contact;
+const SingleContact = ({ name, number, deleteContact }) => {
   return (
     <li className="Contact">
       <h4>{name}</h4>
       <p>{number}</p>
-      <button
-        className="DelBtn"
-        type="button"
-        id={id}
-        onClick={() => deleteContact(id)}
-      >
+      <button className="DelBtn" type="button" onClick={deleteContact}>
         &#10008;
       </button>
     </li>
   );
 };
 
-const mapDispatchToProps = {
-  deleteContact,
+const mapStateToProps = (state, ownProps) => {
+  const contact = state.contacts.items.find(
+    (contact) => contact.id === ownProps.id
+  );
+
+  return { ...contact };
 };
 
-export default connect(null, mapDispatchToProps)(SingleContact);
+const mapDispatchToProps = (dispatch, ownProps) => ({
+  deleteContact: () => dispatch(deleteContact(ownProps.id)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(SingleContact);
 
 SingleContact.propTypes = {
-  contact: PropTypes.shape({
-    name: PropTypes.string,
-    id: PropTypes.string,
-    namber: PropTypes.string,
-  }).isRequired,
+  name: PropTypes.string,
+  id: PropTypes.string.isRequired,
+  number: PropTypes.string,
   deleteContact: PropTypes.func.isRequired,
 };

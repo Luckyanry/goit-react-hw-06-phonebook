@@ -2,10 +2,9 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { CSSTransition } from "react-transition-group";
 import { contactStorage } from "../../redux/actions/contactAction";
-import { handleFilter } from "../../redux/actions/filterAction";
 import ContactForm from "../ContactForm/ContactForm";
-import Filter from "../Filter/Filter";
 import ContactList from "../ContactList/ContactList";
+import Filter from "../Filter/Filter";
 import "./App.css";
 
 class App extends Component {
@@ -30,14 +29,6 @@ class App extends Component {
       localStorage.setItem("contacts", JSON.stringify(contacts));
     }
   }
-
-  getFilteredContact = () => {
-    const { contacts, filter } = this.props;
-
-    return contacts.filter((contact) =>
-      contact.name.toLowerCase().includes(filter.toLowerCase())
-    );
-  };
 
   render() {
     return (
@@ -67,10 +58,10 @@ class App extends Component {
           timeout={250}
           unmountOnExit
         >
-          <Filter state={this.state} handleFilter={this.handleFilter} />
+          <Filter />
         </CSSTransition>
 
-        <ContactList filteredContacts={this.getFilteredContact()} />
+        <ContactList />
       </div>
     );
   }
@@ -78,12 +69,10 @@ class App extends Component {
 
 const mapStateToProps = (state) => ({
   contacts: state.contacts.items,
-  filter: state.contacts.filter,
 });
 
 const mapDispatchToProps = {
   contactStorage,
-  handleFilter,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

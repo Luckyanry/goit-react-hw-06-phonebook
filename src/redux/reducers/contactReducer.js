@@ -3,24 +3,30 @@ import {
   addContact,
   deleteContact,
   contactStorage,
+  handleFilter,
 } from "../actions/contactAction";
 
-export default createReducer([], {
+const removeContact = (state, { payload }) =>
+  state.filter((contact) => contact.id !== payload);
+
+export const items = createReducer([], {
   [addContact]: (state, { payload }) => [...state, payload],
-  [deleteContact]: (state, { payload }) =>
-    state.filter((contact) => contact.id !== payload),
+  [deleteContact]: removeContact,
   [contactStorage]: (state, { payload }) => payload,
+});
+
+export const filter = createReducer("", {
+  [handleFilter]: (state, { payload }) => (state = payload),
 });
 
 // import {
 //   ADD_CONTACT,
 //   DELETE_CONTACT,
 //   CONTAT_STORAGE,
+//   CONTACT_FILTER;
 // } from "../constants/contactConstants";
 
-// const initialState = [];
-
-// export default (state = initialState, { type, payload }) => {
+// export default (state = [], { type, payload }) => {
 //   switch (type) {
 //     case ADD_CONTACT:
 //       return [...state, payload];
@@ -30,6 +36,16 @@ export default createReducer([], {
 
 //     case CONTAT_STORAGE:
 //       return payload;
+
+//     default:
+//       return state;
+//   }
+// };
+
+// export default (state = "", { type, payload }) => {
+//   switch (type) {
+//     case CONTACT_FILTER:
+//       return (state = payload);
 
 //     default:
 //       return state;

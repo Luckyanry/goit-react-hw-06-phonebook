@@ -1,17 +1,32 @@
+import { createAction } from "@reduxjs/toolkit";
+import { v4 as uuidv4 } from "uuid";
 import {
   ADD_CONTACT,
   DELETE_CONTACT,
-  CONTAT_STORAGE,
+  CONTACT_STORAGE,
+  CONTACT_FILTER,
 } from "../constants/contactConstants";
-import { createAction } from "@reduxjs/toolkit";
 
-export const addContact = createAction(ADD_CONTACT);
+export const addContact = createAction(ADD_CONTACT, (name, number) => ({
+  payload: {
+    id: uuidv4(),
+    name,
+    number,
+  },
+}));
 export const deleteContact = createAction(DELETE_CONTACT);
-export const contactStorage = createAction(CONTAT_STORAGE);
+export const contactStorage = createAction(CONTACT_STORAGE);
+export const handleFilter = createAction(CONTACT_FILTER, ({ target }) => ({
+  payload: target.value,
+}));
 
-// export const addContact = (singleContact) => ({
+// export const addContact = (name, number) => ({
 //   type: ADD_CONTACT,
-//   payload: singleContact,
+//   payload: {
+//   id: uuidv4(),
+//   name,
+//   number,
+// },
 // });
 
 // export const deleteContact = (id) => ({
@@ -22,4 +37,9 @@ export const contactStorage = createAction(CONTAT_STORAGE);
 // export const contactStorage = (arr) => ({
 //   type: CONTAT_STORAGE,
 //   payload: arr,
+// });
+
+// export const handleFilter = (e) => ({
+//   type: QUERY_FILTER,
+//   payload: e.target.value,
 // });
