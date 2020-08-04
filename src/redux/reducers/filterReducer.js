@@ -1,13 +1,20 @@
-import { QUERY_FILTER } from "../constants/filterConstants";
+import { createReducer } from "@reduxjs/toolkit";
+import { handleFilter } from "../actions/filterAction";
 
-const initialeState = "";
+export default createReducer("", {
+  [handleFilter]: (state, { payload }) => (state = payload),
+});
 
-export default (state = initialeState, { type, payload }) => {
-  switch (type) {
-    case QUERY_FILTER:
-      return (state = payload);
+// import { QUERY_FILTER } from "../constants/filterConstants";
 
-    default:
-      return state;
-  }
-};
+// const initialeState = "";
+
+// export default (state = initialeState, { type, payload }) => {
+//   switch (type) {
+//     case QUERY_FILTER:
+//       return (state = payload);
+
+//     default:
+//       return state;
+//   }
+// };
